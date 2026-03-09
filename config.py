@@ -66,7 +66,7 @@ class TrainingConfig:
     num_train_epochs: int = 10
     per_device_train_batch_size: int = 32
     per_device_eval_batch_size: int = 64
-    learning_rate: float = 5e-4
+    learning_rate: float = 3e-4
     warmup_steps: int = 500
     weight_decay: float = 0.01
     gradient_accumulation_steps: int = 4   # effective batch = 128

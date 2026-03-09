@@ -169,13 +169,14 @@ def train(args):
     # 3. Model
     logger.info(f"Loading model: {args.model_name}")
     model = AutoModelForSeq2SeqLM.from_pretrained(args.model_name)
-    model.config.tie_word_embeddings = False         # save/load each weight separately
-    model.resize_token_embeddings(len(tokeniser))   # accommodate new lang tokens
-    model.tie_weights()                              # re-tie after resize
+    # resize_token_embeddings handles both embedding + lm_head correctly;
+    # do NOT set tie_word_embeddings=False — it corrupts mT5 lm_head and causes NaN loss
+    model.resize_token_embeddings(len(tokeniser))
 
     if training_config.gradient_checkpointing:
+        model.config.use_cache = False   # required: cache is incompatible with grad checkpointing
         model.gradient_checkpointing_enable()
-        logger.info("Gradient checkpointing enabled")
+        logger.info("Gradient checkpointing enabled (use_cache=False)")
 
     n_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
     logger.info(f"Trainable parameters: {n_params:,}")
