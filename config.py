@@ -65,7 +65,7 @@ class TrainingConfig:
     # Training
     num_train_epochs: int = 10
     per_device_train_batch_size: int = 32
-    per_device_eval_batch_size: int = 64
+    per_device_eval_batch_size: int = 8    # fp32 logits: 8×64×250K×4B = 0.5 GB — safe on T4
     learning_rate: float = 3e-4
     warmup_steps: int = 500
     weight_decay: float = 0.01
