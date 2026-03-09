@@ -12,17 +12,6 @@ Set HF_MODEL_ID env var to your HuggingFace model repo, e.g.:
     HF_MODEL_ID=your-username/multilingual-transliteration
 """
 
-import sys
-import types
-
-# ── Python 3.13 compatibility: audioop was removed from stdlib ─────────────────
-# pydub (a Gradio 4.x dependency) imports audioop; create a stub so the import
-# chain doesn't crash.  We never use audio features, so the stub is never called.
-if "audioop" not in sys.modules:
-    _audioop_stub = types.ModuleType("audioop")
-    sys.modules["audioop"]   = _audioop_stub
-    sys.modules["pyaudioop"] = _audioop_stub
-
 import os
 import re
 import logging
