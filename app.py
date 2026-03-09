@@ -15,6 +15,7 @@ Set HF_MODEL_ID env var to your HuggingFace model repo, e.g.:
 import os
 import re
 import logging
+from pathlib import Path
 from typing import List, Tuple
 
 from dotenv import load_dotenv

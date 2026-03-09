@@ -17,8 +17,7 @@ evaluate>=0.4.1              # HuggingFace evaluate
 tensorboard>=2.15.0
 
 # ── Demo ──────────────────────────────────────────────────────────────────────
-gradio>=4.19.0
-pyaudioop>=0.2.0                # audioop replacement for Python 3.13+
+gradio>=5.0.0
 
 # ── Data / Utilities ──────────────────────────────────────────────────────────
 pandas>=2.0.0
