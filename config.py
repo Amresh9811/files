@@ -70,7 +70,7 @@ class TrainingConfig:
     warmup_steps: int = 500
     weight_decay: float = 0.01
     gradient_accumulation_steps: int = 4   # effective batch = 128
-    fp16: bool = True                      # enabled for GPU (Colab T4)
+    fp16: bool = False                     # mT5 is unstable with fp16; fp32 fits on T4 15GB
     gradient_checkpointing: bool = True    # reduces VRAM at cost of ~20% speed
 
     # Logging / saving

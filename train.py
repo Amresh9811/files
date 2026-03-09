@@ -169,9 +169,25 @@ def train(args):
     # 3. Model
     logger.info(f"Loading model: {args.model_name}")
     model = AutoModelForSeq2SeqLM.from_pretrained(args.model_name)
-    # resize_token_embeddings handles both embedding + lm_head correctly;
-    # do NOT set tie_word_embeddings=False — it corrupts mT5 lm_head and causes NaN loss
-    model.resize_token_embeddings(len(tokeniser))
+
+    # Resize embeddings only if tokeniser is larger than the model's current vocab.
+    # Never shrink — the 3 new lang tokens (250100→250103) still fit inside mT5's
+    # default vocab_size=250112, so no resize is actually needed here.
+    if len(tokeniser) > model.config.vocab_size:
+        num_new = len(tokeniser) - model.config.vocab_size
+        model.resize_token_embeddings(len(tokeniser))
+        # Initialize new token rows to the mean of existing embeddings so they
+        # start in a reasonable range — random init overflows in fp16.
+        with torch.no_grad():
+            inp = model.get_input_embeddings().weight
+            inp[-num_new:] = inp[:-num_new].mean(dim=0, keepdim=True).expand(num_new, -1)
+            out = model.get_output_embeddings().weight
+            out[-num_new:] = out[:-num_new].mean(dim=0, keepdim=True).expand(num_new, -1)
+        logger.info(f"Resized embeddings: {model.config.vocab_size} → {len(tokeniser)}, "
+                    f"initialised {num_new} new rows to embedding mean")
+    else:
+        logger.info(f"No resize needed: tokeniser ({len(tokeniser)}) fits inside "
+                    f"model vocab ({model.config.vocab_size})")
 
     if training_config.gradient_checkpointing:
         model.config.use_cache = False   # required: cache is incompatible with grad checkpointing
