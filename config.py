@@ -57,10 +57,10 @@ class ModelConfig:
 # ── Training hyperparameters ───────────────────────────────────────────────────
 @dataclass
 class TrainingConfig:
-    # Data (per language)
-    train_samples_per_lang: int = 50_000
-    val_samples_per_lang: int = 5_000
-    test_samples_per_lang: int = 2_000
+    # Data (per language) — ~35% of full Aksharantar to keep training fast
+    train_samples_per_lang: int = 17_500
+    val_samples_per_lang: int = 1_750
+    test_samples_per_lang: int = 700
 
     # Training
     num_train_epochs: int = 10
