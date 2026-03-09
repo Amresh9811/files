@@ -1,0 +1,27 @@
+# ── Core ML ───────────────────────────────────────────────────────────────────
+torch>=2.1.0
+transformers>=4.38.0
+datasets>=2.17.0
+accelerate>=0.27.0
+sentencepiece>=0.1.99        # mT5 tokeniser
+protobuf>=3.20.0             # SentencePiece dependency
+
+# ── Optimization ──────────────────────────────────────────────────────────────
+ctranslate2>=3.24.0          # model quantization + fast inference
+
+# ── Evaluation ────────────────────────────────────────────────────────────────
+jiwer>=3.0.3                 # CER / WER computation
+evaluate>=0.4.1              # HuggingFace evaluate
+
+# ── Training utilities ────────────────────────────────────────────────────────
+tensorboard>=2.15.0
+
+# ── Demo ──────────────────────────────────────────────────────────────────────
+gradio>=4.19.0
+
+# ── Data / Utilities ──────────────────────────────────────────────────────────
+pandas>=2.0.0
+numpy>=1.24.0
+tqdm>=4.66.0
+huggingface_hub>=0.21.0
+python-dotenv>=1.0.0

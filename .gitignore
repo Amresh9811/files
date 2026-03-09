@@ -1,0 +1,45 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+checkpoints/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.*
+
+# ML models
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.onnx
+
+# Data files
+data/
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# AI / Claude files
+.claude/
+
+# Temporary files
+*.tmp
+*.temp
